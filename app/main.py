@@ -1,8 +1,18 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from .schemas import ChatResponse, ChatRequest
+from .middleware import add_process_time
 
 app = FastAPI(title= 'backend', version= '1.0.0' )
 
-from .schemas import ChatResponse, ChatRequest
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173", "http://localhost:8080"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+app.middleware("http")(add_process_time)
 
 @app.get('/health', tags= ['meta'])
 def health() -> dict[str, str]:
