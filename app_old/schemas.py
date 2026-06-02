@@ -1,4 +1,13 @@
+"""요청·응답 Pydantic v2 스키마.
+
+엔드포인트마다 의미에 맞는 요청 스키마를 둡니다.
+- /chat       : 자유 질문(prompt)을 받는 ChatRequest
+- /chat/crew  : 리서치 주제(topic)를 받는 CrewRequest
+잘못된 타입은 라우트 진입 전에 422로 차단됩니다.
+"""
+
 from pydantic import BaseModel, Field
+
 
 class ChatRequest(BaseModel):
     """LangChain /chat 요청 본문.
